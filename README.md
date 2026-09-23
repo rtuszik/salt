@@ -40,9 +40,9 @@ The report quotes your messages. Read it before you share it.
 
 ### Claude Code
 
-```text
-/plugin marketplace add rtuszik/salt
-/plugin install salt@salt
+```bash
+claude plugin marketplace add rtuszik/salt
+claude plugin install salt@salt
 ```
 
 Then ask Claude for a salt report.
@@ -50,7 +50,7 @@ Then ask Claude for a salt report.
 ### Codex
 
 ```sh
-codex plugin marketplace add /path/to/salt
+codex plugin marketplace add rtuszik/salt
 codex plugin add salt@salt
 ```
 
