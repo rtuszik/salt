@@ -1,0 +1,19 @@
+#:schema https://www.schemastore.org/ruff.json
+
+[lint]
+ignore = ["S104", "ARG002"]
+extend-select = ["B", "S", "SIM", "T20", "C901", "PTH", "TID", "RET", "ICN", "ISC", "FA", "C4", "UP", "I", "E", "W", "F", "RUF", "ASYNC", "BLE", "A", "FAST", "FBT", "DTZ", "LOG", "PIE", "PYI", "PT", "ARG", "N", "PERF", "FURB"]
+fixable = ["ALL"]
+unfixable = []
+dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
+
+[lint.per-file-ignores]
+# Console output is part of these CLI modules' interface.
+"skills/salt/analyze.py" = ["T201"]
+"skills/salt/saltlib/{report,scoring,tuning}.py" = ["T201"]
+
+[format]
+quote-style = "double"
+indent-style = "space"
+line-ending = "auto"
+docstring-code-format = false

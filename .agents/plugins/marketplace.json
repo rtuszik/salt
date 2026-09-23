@@ -1,0 +1,20 @@
+{
+    "name": "salt",
+    "interface": {
+        "displayName": "Salt"
+    },
+    "plugins": [
+        {
+            "name": "salt",
+            "source": {
+                "source": "local",
+                "path": "./"
+            },
+            "policy": {
+                "installation": "AVAILABLE",
+                "authentication": "ON_INSTALL"
+            },
+            "category": "Productivity"
+        }
+    ]
+}

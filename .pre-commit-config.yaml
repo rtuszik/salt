@@ -1,0 +1,33 @@
+---
+# See https://prek.j178.dev for more information.
+# yaml-language-server: $schema=https://www.schemastore.org/prek.json
+default_install_hook_types: [pre-commit, commit-msg]
+
+repos:
+    - repo: https://github.com/pre-commit/pre-commit-hooks
+      rev: v6.0.0
+      hooks:
+        - id: trailing-whitespace
+        - id: end-of-file-fixer
+        - id: check-yaml
+        - id: check-added-large-files
+
+    - repo: https://github.com/astral-sh/ruff-pre-commit
+      rev: v0.16.7
+      hooks:
+        - id: ruff-check
+          args: [--fix]
+        - id: ruff-format
+
+    - repo: https://github.com/betterleaks/betterleaks
+      rev: v1.8.1
+      hooks:
+        - id: betterleaks
+
+    - repo: local
+      hooks:
+        - id: conventional-commit
+          name: cog verify
+          entry: cog verify --file
+          language: system
+          stages: [commit-msg]

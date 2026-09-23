@@ -1,0 +1,6 @@
+[tools]
+cocogitto = "7.0.0"
+prek = "latest"
+ruff = "latest"
+rumdl = "latest"
+uv = "latest"

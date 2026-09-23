@@ -1,0 +1,14 @@
+ignore_merge_commits = true
+tag_prefix = "v"
+
+pre_bump_hooks = [
+    "python3 scripts/bump-plugin-version.py {{version}}",
+    "git add .claude-plugin/plugin.json .codex-plugin/plugin.json",
+]
+
+[changelog]
+path = "CHANGELOG.md"
+template = "remote"
+remote = "github.com"
+owner = "rtuszik"
+repository = "salt"

@@ -1,0 +1,16 @@
+{
+    "$schema": "https://www.schemastore.org/claude-code-marketplace.json",
+    "name": "salt",
+    "description": "Model-based frustration insights for Claude Code, Codex, and Opencode transcripts",
+    "owner": {
+        "name": "Robin Tuszik"
+    },
+    "plugins": [
+        {
+            "name": "salt",
+            "source": "./",
+            "description": "Model-based frustration insights for agent transcripts",
+            "category": "analysis"
+        }
+    ]
+}

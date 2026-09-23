@@ -1,0 +1,36 @@
+---
+name: CI
+
+on:
+    pull_request:
+    push:
+        branches: [main]
+
+permissions:
+    contents: read
+
+concurrency:
+    group: ${{ github.workflow }}-${{ github.ref }}
+    cancel-in-progress: true
+
+jobs:
+    check:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+              with:
+                fetch-depth: 0
+                persist-credentials: false
+                ref: ${{ github.event.pull_request.head.sha || github.sha }}
+
+            - name: Set up mise
+              uses: jdx/mise-action@c2a87611a18de5b3828c5652fe268e992400cb5c # v4.3.0
+
+            - name: Check Conventional Commits
+              run: cog check
+
+            - name: Check Python
+              run: |
+                ruff check
+                ruff format --check

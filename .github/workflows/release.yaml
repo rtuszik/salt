@@ -1,0 +1,81 @@
+---
+name: Release
+
+on:
+    push:
+        branches: [main]
+
+concurrency:
+    group: release-main
+    cancel-in-progress: false
+
+permissions:
+    contents: read
+
+jobs:
+    release:
+        runs-on: ubuntu-latest
+        permissions:
+            contents: write
+
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+              with:
+                persist-credentials: true
+                fetch-depth: 0
+
+            - name: Set up mise
+              uses: jdx/mise-action@c2a87611a18de5b3828c5652fe268e992400cb5c # v4.3.0
+
+            - name: Check Conventional Commits
+              run: cog check
+
+            - name: Check Python
+              run: |
+                ruff check
+                ruff format --check
+
+            - name: Determine whether a release is needed
+              id: plan
+              run: |
+                target_tag="$(
+                    cog bump --auto --dry-run |
+                        sed -nE '/^v?[0-9]+\.[0-9]+\.[0-9]+(-[0-9A-Za-z.-]+)?(\+[0-9A-Za-z.-]+)?$/p' |
+                        tail -n 1
+                )"
+
+                if [[ -z "$target_tag" ]]; then
+                    echo "released=false" >> "$GITHUB_OUTPUT"
+                    exit 0
+                fi
+
+                echo "released=true" >> "$GITHUB_OUTPUT"
+                echo "tag=$target_tag" >> "$GITHUB_OUTPUT"
+                echo "version=${target_tag#v}" >> "$GITHUB_OUTPUT"
+
+            - name: Create version commit and tag
+              if: steps.plan.outputs.released == 'true'
+              run: |
+                git config user.name github-actions[bot]
+                git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+                cog bump --auto --skip-ci
+
+            - name: Push version commit and tag
+              if: steps.plan.outputs.released == 'true'
+              env:
+                TAG: ${{ steps.plan.outputs.tag }}
+              run: git push --atomic origin HEAD:refs/heads/main "refs/tags/$TAG"
+
+            - name: Generate release notes
+              if: steps.plan.outputs.released == 'true'
+              env:
+                TAG: ${{ steps.plan.outputs.tag }}
+              run: cog changelog --at "$TAG" --template remote > "$RUNNER_TEMP/release-notes.md"
+
+            - name: Create GitHub Release
+              if: steps.plan.outputs.released == 'true'
+              env:
+                GH_TOKEN: ${{ github.token }}
+                TAG: ${{ steps.plan.outputs.tag }}
+              run: gh release create "$TAG" --notes-file "$RUNNER_TEMP/release-notes.md"
