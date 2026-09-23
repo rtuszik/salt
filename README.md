@@ -1,8 +1,9 @@
 # salt
 
 salt reads the messages you typed to Claude Code, Codex, and Opencode.
-It scores each one on-device with the [Laya](https://pypi.org/project/laya/) decision
-model and writes a report of some of your best zingers.
+Instead of running your messages through an API such as Jev,
+it scores each one on-device with [the original (?) RLCD model](https://arxiv.org/abs/2510.01237) [Laya](https://pypi.org/project/laya/)
+and writes a report of some of your best zingers.
 
 ## How it works
 
