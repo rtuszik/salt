@@ -15,7 +15,7 @@ if ! git diff --cached --quiet; then
     exit 1
 fi
 
-rumdl fmt CHANGELOG.md
+rumdl fmt --config 'MD013.reflow = true' CHANGELOG.md
 rumdl check CHANGELOG.md
 if git diff --quiet -- CHANGELOG.md; then
     exit 0

@@ -2,7 +2,7 @@
 cocogitto = "7.0.0"
 prek = "latest"
 ruff = "latest"
-rumdl = "latest"
+rumdl = "0.2.77"
 uv = "latest"
 
 [tasks.check]
