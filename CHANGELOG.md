@@ -1,6 +1,39 @@
 # Changelog
 
-All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
+All notable changes to this project will be documented in this file. See
+[conventional commits](https://www.conventionalcommits.org/) for commit
+guidelines.
+
+- - -
+
+## [v0.2.0](https://github.com/rtuszik/salt/compare/759daa8fe41c8cb37096d90cfb41fa3a63caa8aa..v0.2.0) - 2026-09-24
+
+### Features
+
+- add saltiness scoring and quality checks -
+  ([ab7e1b7](https://github.com/rtuszik/salt/commit/ab7e1b7e0748e5ee169f031f94e66f026381debd)) -
+  Robin Tuszik
+
+#### Documentation
+
+- update README model description and scoring details -
+  ([00d13ba](https://github.com/rtuszik/salt/commit/00d13ba7ea63e9abb454fe697d5d3757e3f7f15d)) -
+  Robin Tuszik
+- update Claude and Codex plugin setup commands -
+  ([759daa8](https://github.com/rtuszik/salt/commit/759daa8fe41c8cb37096d90cfb41fa3a63caa8aa)) -
+  Robin Tuszik
+
+#### Miscellaneous Chores
+
+- (**deps**) update pre-commit hook astral-sh/ruff-pre-commit to v0.16.8 (#4) -
+  ([afdb284](https://github.com/rtuszik/salt/commit/afdb28491706ef6ca269f5638542f0daa742abb4)) -
+  koalabot-rt[bot], koalabot-rt[bot]
+- (**deps**) add renovate.json -
+  ([e4f1ee3](https://github.com/rtuszik/salt/commit/e4f1ee332ec830075a4e646a086c65908f82dc87)) -
+  koalabot-rt[bot]
+- pin rumdl version and enable changelog reflow -
+  ([00c3c22](https://github.com/rtuszik/salt/commit/00c3c227e6baea69fc58d11d1d3059262aceb6c4)) -
+  Robin Tuszik
 
 - - -
 
@@ -8,7 +41,9 @@ All notable changes to this project will be documented in this file. See [conven
 
 ### Features
 
-- initial commit - ([1a1abaf](https://github.com/rtuszik/salt/commit/1a1abaf90e7b54b16fde5ad7e56f9df2c036cdf1)) - Robin Tuszik
+- initial commit -
+  ([1a1abaf](https://github.com/rtuszik/salt/commit/1a1abaf90e7b54b16fde5ad7e56f9df2c036cdf1)) -
+  Robin Tuszik
 
 - - -
 
