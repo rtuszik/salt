@@ -58,6 +58,7 @@
   <h1>Salt Insights</h1>
   <div class="verdict">$verdict</div>
   <div class="stats">
+    <div class="stat"><b>$saltiness</b><span>saltiness (0 to 100)</span></div>
     <div class="stat"><b>$total</b><span>salty messages</span></div>
     <div class="stat"><b>$aimed_at_agent</b><span>aimed at agent</span></div>
     <div class="stat"><b>$salt_rate</b><span>per 1k messages</span></div>
@@ -69,6 +70,7 @@
 <p class="sub">Generated $generated · scanned $total_messages user messages$range_str · sources: $sources
 · classified by Laya (english $english, multilingual $multilingual)
 · salty = severity ≥ $min_severity
+· saltiness = 100 × √(mean hostility), hostility = clamp((severity − 1) / 2, 0, 1) over all typed messages
 · pasted output stripped, $pasted pure pastes skipped</p>
 
 <h2>Hall of Shame</h2>
@@ -118,11 +120,6 @@ $hour_chart
 <h2>Salt Over Time</h2>
 <p class="sub">Weekly trend, stacked by agent.</p>
 $trend_chart
-
-<h2>Self-Burns</h2>
-<ul class="quotes">
-$self_burns
-</ul>
 
 <h2>Ambient Frustration</h2>
 <ul class="quotes">

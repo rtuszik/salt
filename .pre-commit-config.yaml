@@ -4,6 +4,20 @@
 default_install_hook_types: [pre-commit, commit-msg]
 
 repos:
+
+    - repo: local
+      hooks:
+        - id: conventional-commit
+          name: cog verify
+          entry: cog verify --file
+          language: system
+          stages: [commit-msg]
+
+    - repo: https://github.com/betterleaks/betterleaks
+      rev: v1.8.1
+      hooks:
+        - id: betterleaks
+
     - repo: https://github.com/pre-commit/pre-commit-hooks
       rev: v6.0.0
       hooks:
@@ -19,15 +33,8 @@ repos:
           args: [--fix]
         - id: ruff-format
 
-    - repo: https://github.com/betterleaks/betterleaks
-      rev: v1.8.1
+    - repo: https://github.com/rvben/rumdl-pre-commit
+      rev: v0.2.77
       hooks:
-        - id: betterleaks
-
-    - repo: local
-      hooks:
-        - id: conventional-commit
-          name: cog verify
-          entry: cog verify --file
-          language: system
-          stages: [commit-msg]
+        - id: rumdl
+        - id: rumdl-fmt

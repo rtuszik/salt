@@ -31,6 +31,19 @@ QUESTIONS = {
 }
 
 
+def saltiness(severities: list[float]) -> int:
+    """Return 0-100 from the square root of mean hostility.
+
+    Hostility spans 0 at severity 1 to 1 at severity 3.
+    """
+    if not severities:
+        return 0
+    hostility = sum(min(max((s - 1) / 2, 0.0), 1.0) for s in severities) / len(
+        severities
+    )
+    return round(100 * hostility**0.5)
+
+
 def text_key(text: str) -> str:
     return hashlib.sha256(text.encode("utf-8")).hexdigest()
 

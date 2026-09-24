@@ -12,11 +12,26 @@ and writes a report of some of your best zingers.
 3. Asks Laya one question for each message: "How frustrated or hostile is the
    author?" The answer is a score from 0 (calm) to 3 (furious, insulting or
    abusive). A message is salty at 1.55 or higher.
-4. Adds heuristics for the report: the target (agent, self, or ambient) and
+4. Adds heuristics for the report: the target (agent or ambient) and
    trigger-word badges. Trigger words come from salt's own list plus the
    LDNOOBW lists in 28 languages. Matching handles elongations, leetspeak,
    and censored forms. These heuristics do not affect detection.
-5. Prints a console summary and writes an HTML report.
+5. Computes a saltiness score from 0 to 100 over all typed messages (see
+   below).
+6. Prints a console summary and writes an HTML report.
+
+### Saltiness score
+
+Each typed message gets a hostility value from its severity:
+`clamp((severity - 1) / 2, 0, 1)`. That is 0 at or below "mildly annoyed"
+(1) and 1 at "furious" (3). The score is `100 × sqrt(mean hostility)`.
+
+- 0: you never go past mild annoyance.
+- 50: for example, a quarter of your messages are furious and the rest calm.
+- 100: every message is furious.
+
+The score uses every message, so it does not depend on `--min-severity`.
+The report shows it overall and for each agent.
 
 | Agent       | Path                                                                                                       |
 | ----------- | ---------------------------------------------------------------------------------------------------------- |

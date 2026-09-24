@@ -44,19 +44,6 @@ for _w in sorted(TRIGGER_WORDS, key=lambda w: (w not in WORDS["triggers"]["words
     WORDS_BY_LENGTH.setdefault(len(_w), []).append(_w)
 
 AMBIENT_KEYWORDS = WORDS["target"]["ambient"]
-SELF_PATTERNS = [
-    r"\bturns out i(?:'?m| am)\b",
-    (
-        r"\bi(?:'?m| am)\s+(?:an?\s+|so\s+|such\s+(?:an?\s+)?|the\s+"
-        r"|being\s+(?:an?\s+|so\s+)?|actually\s+|kinda\s+|kind of\s+|a bit\s+)?"
-        r"(?:retard|retarded|stupid|dumb|idiot|moron|braindead|fool|loser|garbage|trash)\b"
-    ),
-    (
-        r"\bi was (?:being|so|such)\s+(?:an?\s+)?"
-        r"(?:retarded|stupid|dumb|an idiot|a moron|a fool)\b"
-    ),
-    r"\bmy (?:bad|fault|mistake)\b",
-]
 AGENT_PRONOUN_RE = re.compile(
     r"\byou(\b|r\b|'re\b|re\b|'ve\b|ve\b)|\b(?:du|dich|dein|deine|deinen|deinem|deiner)\b",
     re.IGNORECASE,
@@ -66,10 +53,7 @@ AGENT_PRONOUN_RE = re.compile(
 def classify_target(text: str) -> str:
     # Laya target questions tested unreliable; pronoun heuristic instead.
     low = text.lower()
-    addresses_agent = bool(AGENT_PRONOUN_RE.search(text))
-    if not addresses_agent and any(re.search(p, low) for p in SELF_PATTERNS):
-        return "self"
-    if not addresses_agent and any(k in low for k in AMBIENT_KEYWORDS):
+    if not AGENT_PRONOUN_RE.search(text) and any(k in low for k in AMBIENT_KEYWORDS):
         return "ambient"
     return "agent"
 

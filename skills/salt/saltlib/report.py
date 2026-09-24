@@ -52,9 +52,15 @@ def print_summary(report):
         f"multilingual {mc.get('multilingual', 0)}_\n"
     )
 
+    by_src = ", ".join(
+        f"{SOURCE_LABELS[k]} {report['saltiness_by_source'][k]}"
+        for k in SOURCES
+        if k in report["saltiness_by_source"]
+    )
+    print(f"**Saltiness: {report['saltiness']}/100**  ({by_src})\n")
+
     print("## At a Glance\n")
     print(f"- **Aimed at agent**:        {tc.get('agent', 0)}")
-    print(f"- **Self-directed**:         {tc.get('self', 0)}")
     print(f"- **Ambient**:               {tc.get('ambient', 0)}")
     print(f"- **Profane**:               {sum(f['is_profane'] for f in findings)}")
     print(
@@ -249,6 +255,7 @@ def render_html(report):
         total=total,
         aimed_at_agent=sum(f["target"] == "agent" for f in findings),
         salt_rate=f"{total / total_messages * 1000 if total_messages else 0:.1f}",
+        saltiness=report["saltiness"],
         avg_severity=f"{avg_severity:.2f}",
         unsworn=sum(not f["is_profane"] for f in findings),
         generated=f"{datetime.now().astimezone():%Y-%m-%d %H:%M}",
@@ -276,7 +283,6 @@ def render_html(report):
         ),
         hour_chart=hour_chart(findings),
         trend_chart=trend_chart(findings, report["date_range"]),
-        self_burns=quotes([f for f in ranked if f["target"] == "self"], 10),
         ambient=quotes([f for f in ranked if f["target"] == "ambient"], 10),
         all_agent=quotes(hall, 50),
     )

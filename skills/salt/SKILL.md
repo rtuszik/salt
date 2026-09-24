@@ -20,7 +20,7 @@ Before classification, the script removes pasted lines: code fences, indented bl
 box-drawing and powerline glyphs, log lines, tables, and bare commands. Only the typed lines are
 classified and shown. Messages with no typed lines are skipped.
 
-The target (`agent`, `self`, `ambient`) comes from a pronoun and keyword heuristic (English and
+The target (`agent` or `ambient`) comes from a pronoun and keyword heuristic (English and
 German), not from Laya. Laya target questions tested unreliable.
 
 Trigger words come from the salt word list in `saltlib/words.toml` plus the bundled LDNOOBW lists
@@ -29,6 +29,10 @@ elongations ("fuuuck"), maps leetspeak ("sh1t", "bull$hit"), and resolves censor
 "ret***"). Phrases count once, not also as their single words. Trigger words supply the badges and
 leaderboard, and decide which salty messages count as profane in the report. They do not affect
 detection.
+
+The saltiness score (0 to 100) is `100 × sqrt(mean hostility)` over all typed messages, where
+hostility is `clamp((severity - 1) / 2, 0, 1)`. It does not depend on `--min-severity`. The console
+and the HTML report show it overall and for each agent.
 
 ## Tuning the cutoffs
 

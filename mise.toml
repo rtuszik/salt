@@ -4,3 +4,38 @@ prek = "latest"
 ruff = "latest"
 rumdl = "latest"
 uv = "latest"
+
+[tasks.check]
+description = "Run all quality checks"
+run = [{ tasks = ["format", "lint", "analyze"] }]
+
+[tasks.format]
+run = [{ tasks = ["rumdl-format", "ruff-format"] }]
+
+[tasks.lint]
+run = [{ tasks = ["rumdl-lint-fix", "ruff-lint-fix"] }]
+
+[tasks.analyze]
+run = [{ tasks = ["zizmor"] }]
+
+### RUFF ###
+[tasks.ruff-lint-fix]
+run = "uv run ruff check --fix"
+
+[tasks.ruff-format]
+description = "Run ruff formatter"
+run = "uv run ruff format"
+
+### RUMDL ###
+[tasks.rumdl-lint-fix]
+description = "rumdl check and fix"
+run = "rumdl check --fix"
+
+[tasks.rumdl-format]
+description = "rumdl formatt"
+run = "rumdl fmt"
+
+### ZIZMOR ###
+[tasks.zizmor]
+description = "Run Zizmor"
+run = "zizmor ."

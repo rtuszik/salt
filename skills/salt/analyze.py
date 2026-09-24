@@ -19,7 +19,7 @@ from collections import Counter
 
 from saltlib.heuristics import classify_target, find_triggers
 from saltlib.report import OUTPUT_HTML, print_summary, render_html
-from saltlib.scoring import score_texts
+from saltlib.scoring import saltiness, score_texts
 from saltlib.sources import (
     CODEX_HISTORY,
     OPENCODE_DB,
@@ -76,6 +76,12 @@ def analyze(
         "model_counts": model_counts,
         "min_severity": min_severity,
         "pasted": pasted,
+        "saltiness": saltiness([scores[m[2]]["severity"] for m in messages]),
+        "saltiness_by_source": {
+            s: saltiness([scores[m[2]]["severity"] for m in messages if m[0] == s])
+            for s in include
+            if any(m[0] == s for m in messages)
+        },
         "date_range": (timestamps[0], timestamps[-1]) if timestamps else None,
     }
 
